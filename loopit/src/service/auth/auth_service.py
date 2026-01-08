@@ -18,7 +18,6 @@ class AuthServiceImple(AuthService):
         self.user_repo = user_repo
 
     async def register(self, user: User) -> None:
-        print("user in service=",user)
         try:
             user_db = self.user_repo.find_by_email(user.email)
 
@@ -43,7 +42,6 @@ class AuthServiceImple(AuthService):
         
 
     async def login(self, email: str, password: str):
-        print(email,password)
         try:
             user = self.user_repo.find_by_email(email)
         except UserNotFoundError:

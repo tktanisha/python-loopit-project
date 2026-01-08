@@ -15,7 +15,6 @@ async def get_order_history(user_ctx, status_str: Optional[str], order_service: 
         if status_str:
             try:
                 filter_status = [OrderStatus(status_str)]
-                print("filter status=", filter_status)
             except Exception as e:
                 return write_error_response(
                     status_code=status.HTTP_400_BAD_REQUEST,

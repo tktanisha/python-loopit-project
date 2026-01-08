@@ -31,7 +31,6 @@ async def get_product_by_id(id: int, product_service: ProductService = Depends(g
 @router.post(ApiPaths.CREATE_PRODUCT, status_code=status.HTTP_201_CREATED)
 async def create_product(product: ProductRequest, request:Request,product_service: ProductService = Depends(get_product_service)):
     user_ctx = request.state.user
-    print("user ctx=",user_ctx)
     return await controller.create_product(
         product = product,
         product_service = product_service,
@@ -41,7 +40,6 @@ async def create_product(product: ProductRequest, request:Request,product_servic
 @router.put(ApiPaths.UPDATE_PRODUCT, status_code=status.HTTP_200_OK)
 async def update_product(id: int, product: ProductRequest,request:Request, product_service: ProductService = Depends(get_product_service)):
     user_ctx = request.state.user
-    print("userctx=",user_ctx)
     return await controller.update_product(
         id=id,
         product=product,

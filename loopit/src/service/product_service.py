@@ -1,6 +1,7 @@
 
 import logging
 from datetime import datetime
+import time
 from repository.user.user_interface import UserRepo 
 from repository.product_repository import ProductRepo
 from schemas.product import ProductRequest, ProductResponse
@@ -24,7 +25,6 @@ class ProductService:
                 lender_id= lender_id
             )
             products = await self.product_repo.find_all(filters)
-            print("products=",products)
             return products
         
         except Exception as e:
@@ -48,10 +48,10 @@ class ProductService:
         try:
             if user_ctx is None:
                 raise RuntimeError("user not logged in")
-            role_val = getattr(user_ctx, "role", None)
+            role_val = user_ctx.get( "role")
             if role_val not in (Role.lender, "lender"):
                 raise RuntimeError("only lenders can create products")
-            lender_id = getattr(user_ctx, "user_id", None) 
+            lender_id = user_ctx.get("user_id") 
             if lender_id is None or int(lender_id) <= 0:
                 raise RuntimeError("invalid lender")
             
@@ -63,7 +63,7 @@ class ProductService:
                 duration=product.duration,
                 is_available=True,
                 image_url=product.image_url,
-                created_at=datetime.now(),
+                created_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             )
             await self.product_repo.create(product)
         except Exception as e:
@@ -75,7 +75,6 @@ class ProductService:
             if user_ctx is None:
                 raise RuntimeError("user not logged in")
             role_val = user_ctx.get("role", None)
-            print("role=",role_val)
             if role_val not in (Role.lender, "lender"):
                 raise RuntimeError("only lenders can update products")
             product_resp = await self.product_repo.find_by_id(id)

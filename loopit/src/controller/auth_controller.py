@@ -26,7 +26,6 @@ async def signup_controller(
         password_hash=payload.password,  # raw password for now
         society_id=payload.society_id,
     )
-    print("controller,-",user)
     try:
         await auth_service.register(user = user)
 
@@ -37,7 +36,6 @@ async def signup_controller(
         )
 
     except AuthServiceError as e:
-        logger.exception("controoler=",e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to register user",
@@ -75,8 +73,6 @@ async def login_controller(
 ):
     try:
         token, user = await auth_service.login(email, password)
-        print("token=",token)
-        print("user in login=",user)
     except InvalidCredentialsError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

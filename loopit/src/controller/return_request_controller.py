@@ -54,7 +54,7 @@ async def update_return_request_status(request_id: int, status_str: str, user_ct
 
 
     try:
-        parsed_status =ReturnStatus(status)
+        parsed_status =ReturnStatus(status_str)
     except Exception as e:
         return write_error_response(
             status_code=status.HTTP_400_BAD_REQUEST,

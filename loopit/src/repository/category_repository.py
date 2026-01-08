@@ -30,10 +30,8 @@ class CategoryRepo:
                 **category.model_dump(by_alias=True),
                 "CreatedAt":created_at
             }
-            print("before db item=",item)
 
             item_db = self.serializer.serialize(item)["M"]
-            print("item=",item_db)
 
             await asyncio.to_thread(
                 self.dynamodb.put_item,
@@ -89,7 +87,6 @@ class CategoryRepo:
     
 
     async def find_by_id(self,id: int)-> Optional[Category]:
-        print("catgery id===",id)
         try:
             response = await asyncio.to_thread(
                 self.dynamodb.get_item,
@@ -99,7 +96,6 @@ class CategoryRepo:
                     "sk":{"S": f"ID#{id}"},
                 },
             )
-            print("response=",response)
 
         except botocore.exceptions.ClientError as e:
             logger.exception("aied to get the category")
@@ -110,7 +106,6 @@ class CategoryRepo:
             raise RuntimeError(e) 
 
         item= response.get("Item")
-        print("item=",item)
         if not item:
             return None
 
@@ -140,7 +135,6 @@ class CategoryRepo:
                 **category.model_dump(by_alias=True),
                 "UpdatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             }
-            print("data=",data)
 
             item = self.serializer.serialize(data)["M"]
 

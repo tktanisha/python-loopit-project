@@ -15,3 +15,6 @@ class ProductImage(BaseModel):
     product_id: int = Field(alias="ProductID", gt=0)
     image_url: str = Field(alias="ImageURL", min_length=1)
     uploaded_at: datetime = Field(default_factory=datetime.now, alias="UploadedAt")
+
+
+

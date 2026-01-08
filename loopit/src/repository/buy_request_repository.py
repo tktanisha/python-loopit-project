@@ -54,7 +54,6 @@ class BuyRequestRepo:
                 ExpressionAttributeValues={":pk": {"S": "BUYREQUEST"}, ":skPrefix": {"S": sk_prefix}},
             )
             items = resp.get("Items", [])
-            print("item==============",items)
             requests: List[BuyingRequest] = []
 
             for item in items:

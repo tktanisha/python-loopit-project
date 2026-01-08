@@ -29,7 +29,6 @@ class UserDynamoRepo(UserRepo):
 
 
     def find_by_email(self, email: str) -> User:
-        print("email=",email)
         try:
             resp = self.dynamodb.get_item(
                 TableName=self.table_name,
@@ -39,10 +38,7 @@ class UserDynamoRepo(UserRepo):
                 }
             )
 
-            print("response in repo=",resp)
         except Exception as e:
-            print("tablename=",self.table_name)
-            print("DDB_TABLE_NAME =", AppSettings.DDB_TABLE_NAME)
             logger.exception("in repo=",e)
             raise UserRepositoryError("DynamoDB get_item failed") from e
 
@@ -51,7 +47,6 @@ class UserDynamoRepo(UserRepo):
 
         item = {k: self.deserializer.deserialize(v) for k, v in resp["Item"].items()}
 
-        print("user item =",item)
         return User(
             id=int(item["ID"]),
             full_name=item["FullName"],
@@ -147,16 +142,13 @@ class UserDynamoRepo(UserRepo):
         
 
     async def become_lender(self, user_id: int) -> None:
-        print("userid===",user_id)
         try:
             key = {
                 "pk": {"S": "USER"}, 
                 "sk": {"S": f"ID#{user_id}"}
                 }
             resp = await asyncio.to_thread(self.dynamodb.get_item, TableName=self.table_name, Key=key)
-            print("response user==========",resp)
             item = resp.get("Item")
-            print("item======",item)
 
             if not item:
                 raise RuntimeError("user not found")
@@ -255,7 +247,6 @@ class UserDynamoRepo(UserRepo):
             raise RuntimeError(e)
 
     async def find_by_id(self, user_id: int) -> Optional[User]:
-        print("userid=================",user_id)
         try:
             key = {
                 "pk": {"S": "USER"},
@@ -267,13 +258,11 @@ class UserDynamoRepo(UserRepo):
                 Key=key
                 )
             
-            print("response======",response)
             item = response.get("Item")
 
             if not item:
                 return None
             doc = {k: self.deserializer.deserialize(v) for k, v in item.items()}
-            print("doc==",doc)
             return User.model_validate({
                 "ID": int(doc.get("ID")),
                 "FullName": doc.get("FullName"),

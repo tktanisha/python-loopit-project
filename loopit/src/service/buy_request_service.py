@@ -59,7 +59,7 @@ class BuyRequestService:
                 product_id=product_id,
                 requested_by=int(requester_id),
                 status=BuyRequestStatus.Pending.value,
-                created_at=datetime.now(),
+                created_at=datetime.now,
             )
             await self.buyer_request_repo.create_buyer_request(new_request)
 
@@ -102,7 +102,7 @@ class BuyRequestService:
                 total_amount=float(getattr(category, "price", 0.0)),
                 security_amount=float(getattr(category, "security", 0.0)),
                 status=OrderStatus.InUse.value,
-                created_at=datetime.now(),
+                created_at=datetime.now,
             )
 
             await self.order_repo.create_order(new_order)

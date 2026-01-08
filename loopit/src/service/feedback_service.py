@@ -32,7 +32,7 @@ class FeedbackService:
                 given_to=given_to,
                 rating=int(rating),
                 text=feedback_text,
-                created_at=datetime.now(),
+                created_at=datetime.now,
             )
             await self.feedback_repo.create_feedback(feedback)
         except Exception as e:

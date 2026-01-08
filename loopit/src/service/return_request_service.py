@@ -36,7 +36,7 @@ class ReturnRequestService:
                 order_id=order_id,
                 requested_by=user_id,
                 status=ReturnStatus.Pending,
-                created_at=datetime.now(),
+                created_at=datetime.now,
             )
 
             await self.order_repo.update_order_status(order_id, OrderStatus.ReturnRequested.value)

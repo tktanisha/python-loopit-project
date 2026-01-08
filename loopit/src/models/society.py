@@ -15,6 +15,6 @@ class Society(BaseModel):
     name: str = Field(alias="Name")
     location: str = Field(alias="Location")
     pincode: str = Field(alias="Pincode")
-    created_at: datetime = Field(default_factory=datetime.now(), alias="CreatedAt")
+    created_at: datetime = Field(default_factory=datetime.now, alias="CreatedAt")
 
     

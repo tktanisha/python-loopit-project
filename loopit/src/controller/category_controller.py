@@ -9,7 +9,6 @@ async def create_category(category: CategoryRequest, category_service :CategoryS
     category_payload:Category = Category(**category.model_dump())
     try:
         await category_service.create_category(category_payload)
-        print("in controller")
     except Exception as e:
         return write_error_response(
             status_code = status.HTTP_400_BAD_REQUEST,
@@ -25,7 +24,6 @@ async def create_category(category: CategoryRequest, category_service :CategoryS
 async def get_all_category(category_service :CategoryService):
     try:
         categories = await category_service.get_all_categories()
-        print("catgeories=",categories)
     except Exception as e:
         return write_error_response(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

@@ -32,7 +32,6 @@ async def get_all_buyer_requests(
     buyer_request_service: BuyRequestService = Depends(get_buyer_request_service),
     product_service: ProductService = Depends(get_product_service),
 ):
-    print(request.query_params.get("product_id"))
     return await controller.get_all_buyer_requests(
         product_id= (request.query_params.get("product_id")),
         status_str = request.query_params.get("status"),

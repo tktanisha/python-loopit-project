@@ -30,13 +30,11 @@ class OrderService:
             raise e
 
     async def get_order_history(self, user_ctx, filter_statuses: List[OrderStatus]) -> List[Order]:
-        print("in the service-------------",filter_statuses)
         try:
             user_id = getattr(user_ctx, "user_id", None) if not isinstance(user_ctx, dict) else user_ctx.get("user_id")
             
             status_str = [s.value for s in filter_statuses] if filter_statuses else []
             orders = await self.order_repo.get_order_history(int(user_id), status_str)
-            print("orders in 1 =======================",orders)
             return orders
         except Exception as e:
             logger.exception("failed in service get_order_history")
@@ -85,12 +83,10 @@ class OrderService:
     #             raise RuntimeError("only lender can get returned awaiting orders")
             
     #         return_requests = await self.return_request_repo.get_all_return_requests(["approved"])
-    #         print("return-request=============",return_requests)
 
     #         orders:List[OrderResponse] = []
 
     #         for rr in return_requests:
-    #             print("order id=",rr.order_id)
     #             order = await self.order_repo.get_order_by_id(rr.order_id)
                 
     #             if order.status != OrderStatus.ReturnRequested:

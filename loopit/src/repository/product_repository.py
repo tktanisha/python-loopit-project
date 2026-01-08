@@ -4,7 +4,6 @@ import time
 import logging
 import botocore
 from typing import Optional, List
-from models.category import Category
 from repository.category_repository import CategoryRepo
 from repository.user.user_interface import UserRepo
 from models.user import User
@@ -25,17 +24,17 @@ class ProductRepo:
         self.deserializer = TypeDeserializer()
 
     async def create(self, product: Product) -> None:
-        pid = product.id if product.id is not None else time.time_ns()
-        created_at = product.created_at.isoformat()
+        pid =  time.time_ns()
+        created_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         base = {
-            "ID": int(pid),
+            "ID": pid,
             "LenderID": int(product.lender_id),
             "CategoryID": int(product.category_id),
             "Name": product.name,
             "Description": product.description,
             "Duration": int(product.duration),
             "IsAvailable": bool(product.is_available),
-            "ImageUrl": product.image_url or "",
+            "ImageUrl": product.image_url ,
             "CreatedAt": created_at,
         }
         items = [
@@ -161,7 +160,6 @@ class ProductRepo:
             if self.user_repo:
                 try:
                     user = await self.user_repo.find_by_id(Lender_id)
-                    print("user=",user)
                 except Exception as e:
                     raise RuntimeError(e)
                 

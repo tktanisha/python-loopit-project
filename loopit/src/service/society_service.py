@@ -25,7 +25,7 @@ class SocietyService:
             name=name,
             location=location,
             pincode=pincode,
-            created_at=datetime.now()
+            created_at=datetime.now
         )
 
         try:

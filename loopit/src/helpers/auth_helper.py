@@ -25,7 +25,6 @@ class AuthHelper:
     @staticmethod
     def create_token(user_id: str, role: str) -> str:
         now = datetime.now(timezone.utc)
-        print(f"{AppSettings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES}")
         payload = {
             "user_id": str(user_id),
             "role": str(role),

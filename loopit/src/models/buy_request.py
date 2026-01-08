@@ -17,4 +17,4 @@ class BuyingRequest(BaseModel):
     product_id: int = Field(alias="ProductId", gt=0)
     requested_by: int = Field(alias="RequestedBy", gt=0)
     status: BuyRequestStatus = Field(alias="Status")
-    created_at: datetime = Field(default_factory=datetime.now(), alias="CreatedAt")
+    created_at: datetime = Field(default_factory=datetime.now, alias="CreatedAt")

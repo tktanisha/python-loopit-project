@@ -19,7 +19,7 @@ class User(BaseModel):
     password_hash: str = Field(alias="PasswordHash")
     society_id: int = Field(alias="SocietyID")
     role: Role = Field(default=Role.user, alias="Role")
-    created_at: datetime = Field(default_factory=datetime.now(), alias="CreatedAt")
+    created_at: datetime = Field(default_factory=datetime.now, alias="CreatedAt")
 
     
 
