@@ -3,6 +3,7 @@ import asyncio
 import time
 import logging
 import botocore
+from datetime import datetime,timezone
 from typing import List, Optional
 from boto3.dynamodb.types import TypeSerializer, TypeDeserializer
 from models.return_request import ReturnRequest
@@ -24,7 +25,7 @@ class ReturnRequestRepo:
     async def create_return_request(self, req: ReturnRequest) -> None:
         try:
             rid = req.id if req.id else time.time_ns()
-            created_at = req.created_at.isoformat()
+            created_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             item = {
                 "pk": "RETURNREQUEST",
                 "sk": f"ID#{rid}",

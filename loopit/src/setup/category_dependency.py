@@ -1,6 +1,6 @@
-from loopit.src.database.connection import get_dynamodb
-from loopit.src.service.category_service import CategoryService
-from loopit.src.repository.category_repository import CategoryRepo
+from database.connection import get_dynamodb
+from service.category_service import CategoryService
+from repository.category_repository import CategoryRepo
 from fastapi import Depends
 from typing import Annotated
 

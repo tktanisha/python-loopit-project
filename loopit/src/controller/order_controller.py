@@ -59,27 +59,27 @@ async def mark_order_as_returned(order_id: int, order_service: OrderService, use
         message="order status updated successfully",
     )
 
-async def get_all_approved_awaiting_orders(order_service: OrderService, product_service: ProductService, user_ctx):
-    try:
-        orders = await order_service.get_all_approved_awaiting_orders(user_ctx=user_ctx)
-        responses = []
-        for o in orders:
-            try:
-                p = await product_service.get_product_by_id(o.product_id)
-                responses.append(OrderResponse(order=o, product=p))
-            except Exception:
-                continue
-    except Exception as e:
-        return write_error_response(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            error="failed to fetch approved awaiting orders",
-            details=str(e),
-        )
-    data = [r.model_dump() if hasattr(r, "model_dump") else r for r in responses]
-    return write_success_response(
-        status_code=status.HTTP_200_OK,
-        data=data,
-    )
+# async def get_all_approved_awaiting_orders(order_service: OrderService, product_service: ProductService, user_ctx):
+#     try:
+#         orders = await order_service.get_all_approved_awaiting_orders(user_ctx=user_ctx)
+#         responses = []
+#         for o in orders:
+#             try:
+#                 p = await product_service.get_product_by_id(o.product_id)
+#                 responses.append(OrderResponse(order=o, product=p))
+#             except Exception:
+#                 continue
+#     except Exception as e:
+#         return write_error_response(
+#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#             error="failed to fetch approved awaiting orders",
+#             details=str(e),
+#         )
+#     data = [r.model_dump() if hasattr(r, "model_dump") else r for r in responses]
+#     return write_success_response(
+#         status_code=status.HTTP_200_OK,
+#         data=data,
+#     )
 
 async def get_lender_orders(order_service: OrderService, product_service: ProductService, user_ctx):
     try:

@@ -7,6 +7,7 @@ from repository.product_repository import ProductRepo
 from repository.return_request_repository import ReturnRequestRepo
 from models.enums.user import Role
 from models.orders import Order
+from schemas.orders import OrderSchema,OrderResponse
 
 logger = logging.getLogger(__name__)
 
@@ -75,25 +76,27 @@ class OrderService:
             logger.exception("failed in service mark_order_as_returned")
             raise e
 
-    async def get_all_approved_awaiting_orders(self, user_ctx) -> List:
-        try:
-            role_val = getattr(user_ctx, "role", None) if not isinstance(user_ctx, dict) else user_ctx.get("role")
-            if Role:
-                allowed = role_val in (Role.lender, "lender")
-            else:
-                allowed = role_val in ("lender",)
-            if not allowed:
-                raise RuntimeError("only lender can get returned awaiting orders")
-            return_requests = await self.return_request_repo.get_all_return_requests(["approved"])
-            orders = []
-            for rr in return_requests:
-                order = await self.order_repo.get_order_by_id(rr.order_id)
-                if not order:
-                    continue
-                if order.status != OrderStatus.ReturnRequested:
-                    continue
-                orders.append(order)
-            return orders
-        except Exception as e:
-            logger.exception("failed in service get_all_approved_awaiting_orders")
-            raise e
+    # async def get_all_approved_awaiting_orders(self, user_ctx) -> List:
+    #     try:
+    #         role_val = user_ctx.get("role")
+    #         if Role:
+    #             allowed = role_val in (Role.lender, "lender")
+    #         if not allowed:
+    #             raise RuntimeError("only lender can get returned awaiting orders")
+            
+    #         return_requests = await self.return_request_repo.get_all_return_requests(["approved"])
+    #         print("return-request=============",return_requests)
+
+    #         orders:List[OrderResponse] = []
+
+    #         for rr in return_requests:
+    #             print("order id=",rr.order_id)
+    #             order = await self.order_repo.get_order_by_id(rr.order_id)
+                
+    #             if order.status != OrderStatus.ReturnRequested:
+    #                 continue
+    #             orders.append(order)
+    #         return orders
+    #     except Exception as e:
+    #         logger.exception("failed in service get_all_approved_awaiting_orders")
+    #         raise e

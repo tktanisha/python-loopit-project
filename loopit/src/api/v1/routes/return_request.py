@@ -8,9 +8,9 @@ from service.return_request_service import ReturnRequestService
 from controller import return_request_controller as controller
 from schemas.return_request import ReturnRequestPayload, ReturnRequestSchema, ReturnRequestStatusUpdate
 
-router = APIRouter()
+router = APIRouter(dependencies=[Depends(AuthHelper.verify_jwt)])
 
-@router.get(ApiPaths.GET_RETURN_REQUESTS, status_code=status.HTTP_200_OK, dependencies=[Depends(AuthHelper.verify_jwt)])
+@router.get(ApiPaths.GET_RETURN_REQUESTS, status_code=status.HTTP_200_OK)
 async def get_return_requests(
     request: Request,
     return_request_service: ReturnRequestService = Depends(get_return_request_service),
@@ -21,9 +21,9 @@ async def get_return_requests(
         return_request_service=return_request_service,
     )
 
-@router.post(ApiPaths.CREATE_RETURN_REQUEST, status_code=status.HTTP_201_CREATED, dependencies=[Depends(AuthHelper.verify_jwt)])
+@router.post(ApiPaths.CREATE_RETURN_REQUEST, status_code=status.HTTP_201_CREATED)
 async def create_return_request(
-    payload: ReturnRequestSchema,
+    payload: ReturnRequestPayload,
     request: Request,
     return_request_service: ReturnRequestService = Depends(get_return_request_service),
 ):
@@ -34,7 +34,7 @@ async def create_return_request(
         return_request_service=return_request_service,
     )
 
-@router.patch(ApiPaths.UPDATE_RETURN_REQUEST_STATUS, status_code=status.HTTP_200_OK, dependencies=[Depends(AuthHelper.verify_jwt)])
+@router.patch(ApiPaths.UPDATE_RETURN_REQUEST_STATUS, status_code=status.HTTP_200_OK)
 async def update_return_request_status(
     requestId: int,
     payload: ReturnRequestStatusUpdate,
@@ -44,7 +44,7 @@ async def update_return_request_status(
     user_ctx = request.state.user
     return await controller.update_return_request_status(
         request_id=requestId,
-        status=payload.status,
+        status_str=payload.status,
         user_ctx=user_ctx,
         return_request_service=return_request_service,
     )

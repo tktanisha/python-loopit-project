@@ -22,24 +22,24 @@ async def give_feedback(
         user_ctx=user_ctx,
     )
 
-@router.get(ApiPaths.GET_GIVEN_FEEDBACKS, status_code=status.HTTP_200_OK)
-async def get_all_given_feedbacks(
-    request: Request,
-    feedback_service: FeedbackService = Depends(get_feedback_service),
-):
-    user_ctx = request.state.user
-    return await controller.get_all_given_feedbacks(
-        feedback_service=feedback_service,
-        user_ctx=user_ctx,
-    )
+# @router.get(ApiPaths.GET_GIVEN_FEEDBACKS, status_code=status.HTTP_200_OK)
+# async def get_all_given_feedbacks(
+#     request: Request,
+#     feedback_service: FeedbackService = Depends(get_feedback_service),
+# ):
+#     user_ctx = request.state.user
+#     return await controller.get_all_given_feedbacks(
+#         feedback_service=feedback_service,
+#         user_ctx=user_ctx,
+#     )
 
-@router.get(ApiPaths.GET_RECEIVED_FEEDBACKS, status_code=status.HTTP_200_OK)
-async def get_all_received_feedbacks(
-    request: Request,
-    feedback_service: FeedbackService = Depends(get_feedback_service),
-):
-    user_ctx = request.state.user
-    return await controller.get_all_received_feedbacks(
-        feedback_service=feedback_service,
-        user_ctx=user_ctx,
-    )
+# @router.get(ApiPaths.GET_RECEIVED_FEEDBACKS, status_code=status.HTTP_200_OK)
+# async def get_all_received_feedbacks(
+#     request: Request,
+#     feedback_service: FeedbackService = Depends(get_feedback_service),
+# ):
+#     user_ctx = request.state.user
+#     return await controller.get_all_received_feedbacks(
+#         feedback_service=feedback_service,
+#         user_ctx=user_ctx,
+#     )

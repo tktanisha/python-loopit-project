@@ -3,7 +3,7 @@ import bcrypt
 from fastapi import HTTPException, status,Request
 from fastapi.security import OAuth2PasswordBearer
 from jose import ExpiredSignatureError, JWTError, jwt
-from loopit.src.helpers.app_settings import AppSettings
+from helpers.app_settings import AppSettings
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl="/api/v1/login")
 

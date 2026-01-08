@@ -16,7 +16,7 @@ def get_return_request_service(
     return_request_repo: Annotated[ReturnRequestRepo, Depends(get_return_request_repo)],
 ) -> ReturnRequestService:
     return ReturnRequestService(
-        orderRepo=order_repo,
-        productRepo=product_repo,
-        rrRepo=return_request_repo,
+        order_repo=order_repo,
+        product_repo=product_repo,
+        return_request_repo=return_request_repo,
     )

@@ -1,4 +1,4 @@
-from loopit.src.controller.auth_controller import login_controller, signup_controller
+from controller.auth_controller import login_controller, signup_controller
 from fastapi import APIRouter, status,Depends
 from helpers.api_paths import ApiPaths
 from schemas.auth import LoginRequest,RegisterRequest 

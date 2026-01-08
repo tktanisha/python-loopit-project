@@ -147,16 +147,24 @@ class UserDynamoRepo(UserRepo):
         
 
     async def become_lender(self, user_id: int) -> None:
+        print("userid===",user_id)
         try:
-            key = {"pk": {"S": "USER"}, "sk": {"S": f"ID#{int(user_id)}"}}
+            key = {
+                "pk": {"S": "USER"}, 
+                "sk": {"S": f"ID#{user_id}"}
+                }
             resp = await asyncio.to_thread(self.dynamodb.get_item, TableName=self.table_name, Key=key)
+            print("response user==========",resp)
             item = resp.get("Item")
+            print("item======",item)
+
             if not item:
                 raise RuntimeError("user not found")
+            
             doc = {k: self.deserializer.deserialize(v) for k, v in item.items()}
+
             old_role = str(doc.get("Role", "")).lower()
-            name = str(doc.get("Name")) if doc.get("Name") is not None else ""
-            society_id = int(doc.get("SocietyID")) if doc.get("SocietyID") not in (None, "") else None
+           
 
             update = {
                 "Update": {
@@ -187,7 +195,9 @@ class UserDynamoRepo(UserRepo):
                 }
             }]
             txn = deletes + [update] + puts
+
             await asyncio.to_thread(self.dynamodb.transact_write_items, TransactItems=txn)
+
         except botocore.exceptions.ClientError as e:
             logger.exception("failed to become lender")
             raise RuntimeError(e)

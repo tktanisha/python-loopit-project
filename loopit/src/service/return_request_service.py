@@ -2,7 +2,9 @@
 import logging
 from typing import List
 from datetime import datetime
-
+from repository.order_repository import OrderRepo
+from repository.product_repository import ProductRepo
+from repository.return_request_repository import ReturnRequestRepo
 from models.return_request import ReturnRequest
 from models.enums.return_req_status import ReturnStatus
 from models.enums.order_status import OrderStatus
@@ -11,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReturnRequestService:
-    def __init__(self, order_repo, product_repo, return_request_repo):
+    def __init__(self, order_repo:OrderRepo, product_repo:ProductRepo, return_request_repo:ReturnRequestRepo):
         self.order_repo = order_repo
         self.product_repo = product_repo
         self.return_request_repo = return_request_repo
@@ -21,7 +23,7 @@ class ReturnRequestService:
             order = await self.order_repo.get_order_by_id(order_id)
             if order is None:
                 raise RuntimeError("order not found")
-            if order.status != OrderStatus.in_use:
+            if order.status != OrderStatus.InUse:
                 raise RuntimeError("order is not in 'in_use' status")
 
             product_resp = await self.product_repo.find_by_id(order.product_id)
@@ -37,7 +39,7 @@ class ReturnRequestService:
                 created_at=datetime.now(),
             )
 
-            await self.order_repo.update_order_status(order_id, OrderStatus.return_requested.value)
+            await self.order_repo.update_order_status(order_id, OrderStatus.ReturnRequested.value)
             await self.return_request_repo.create_return_request(rr)
         except Exception as e:
             logger.exception("failed in service create_return_request")

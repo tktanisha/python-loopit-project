@@ -1,9 +1,9 @@
-from loopit.src.service.category_service import CategoryService
-from loopit.src.models.category import Category
-from loopit.src.schemas.category import CategoryRequest, CategoryResponse
+from service.category_service import CategoryService
+from models.category import Category
+from schemas.category import CategoryRequest, CategoryResponse
 from fastapi import HTTPException,status
-from loopit.src.helpers.error_handler import write_error_response
-from loopit.src.helpers.success_handler import write_success_response
+from helpers.error_handler import write_error_response
+from helpers.success_handler import write_success_response
 
 async def create_category(category: CategoryRequest, category_service :CategoryService):
     category_payload:Category = Category(**category.model_dump())

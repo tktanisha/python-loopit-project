@@ -21,10 +21,7 @@ def _is_admin(user_ctx) -> bool:
     return str(role_val).lower() == "admin"
 
 async def become_lender(user_service: UserService, user_ctx):
-    """
-    PATCH /users/become-lender
-    Requires authenticated user; promotes their role to 'lender'.
-    """
+
     if user_ctx is None:
         return write_error_response(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -33,28 +30,23 @@ async def become_lender(user_service: UserService, user_ctx):
         )
     try:
         await user_service.become_lender(user_ctx)
-        # reflect role change in returned user object (parity with Go)
+        # reflect role change in returned user object 
         if isinstance(user_ctx, dict):
             user_ctx["role"] = "lender"
-            user_data = user_ctx
+            
         else:
             setattr(user_ctx, "role", "lender")
-            # if your ctx is a Pydantic model, .model_dump() will be cleaner
-            user_data = (
-                user_ctx.model_dump()
-                if hasattr(user_ctx, "model_dump")
-                else user_ctx.__dict__
-            )
+            
     except Exception as e:
         return write_error_response(
-            status_code=status.HTTP_200_OK,  # Go returns 200 with status=false; but better is 400/500
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
             error="become lender failed",
             details=str(e),
         )
     return write_success_response(
         status_code=status.HTTP_200_OK,
         message="User promoted to lender successfully",
-        data={"user": user_data},
+        data={"user": user_ctx},
     )
 
 async def get_all_users(search: str, role: str, society_id: str, user_service: UserService, user_ctx):

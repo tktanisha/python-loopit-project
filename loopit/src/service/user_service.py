@@ -15,11 +15,11 @@ class UserService:
             if user_ctx is None:
                 raise RuntimeError("user context missing")
 
-            role_val = getattr(user_ctx, "role", None) if not isinstance(user_ctx, dict) else user_ctx.get("role")
-            if str(role_val).lower() == "lender":
+            role_val =  user_ctx.get("role")
+            if role_val == "lender":
                 raise RuntimeError("user is already a lender")
 
-            user_id = getattr(user_ctx, "user_id", None) if not isinstance(user_ctx, dict) else user_ctx.get("user_id")
+            user_id = user_ctx.get("user_id")
             if user_id is None or int(user_id) <= 0:
                 raise RuntimeError("invalid user id")
 

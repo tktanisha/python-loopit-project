@@ -1,10 +1,10 @@
 from fastapi import Depends,APIRouter,status
-from loopit.src.helpers.auth_helper import AuthHelper
-from loopit.src.helpers.api_paths import ApiPaths
-from loopit.src.schemas.category import CategoryRequest,CategoryResponse
-import loopit.src.controller.category_controller as controller
-from loopit.src.service.category_service import CategoryService
-from loopit.src.setup.category_dependency import get_category_service
+from helpers.auth_helper import AuthHelper
+from helpers.api_paths import ApiPaths
+from schemas.category import CategoryRequest,CategoryResponse
+import controller.category_controller as controller
+from service.category_service import CategoryService
+from setup.category_dependency import get_category_service
 
 
 router = APIRouter( dependencies= [Depends(AuthHelper.verify_jwt)])

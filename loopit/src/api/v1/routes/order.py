@@ -38,18 +38,18 @@ async def mark_order_as_returned(
         user_ctx=user_ctx,
     )
 
-@router.get(ApiPaths.GET_APPROVED_AWAITING_ORDERS, status_code=status.HTTP_200_OK, dependencies=[Depends(AuthHelper.verify_jwt)])
-async def get_all_approved_awaiting_orders(
-    request: Request,
-    order_service: OrderService = Depends(get_order_service),
-    product_service: ProductService = Depends(get_product_service),
-):
-    user_ctx = request.state.user
-    return await controller.get_all_approved_awaiting_orders(
-        order_service=order_service,
-        product_service=product_service,
-        user_ctx=user_ctx,
-    )
+# @router.get(ApiPaths.GET_APPROVED_AWAITING_ORDERS, status_code=status.HTTP_200_OK, dependencies=[Depends(AuthHelper.verify_jwt)])
+# async def get_all_approved_awaiting_orders(
+#     request: Request,
+#     order_service: OrderService = Depends(get_order_service),
+#     product_service: ProductService = Depends(get_product_service),
+# ):
+#     user_ctx = request.state.user
+#     return await controller.get_all_approved_awaiting_orders(
+#         order_service=order_service,
+#         product_service=product_service,
+#         user_ctx=user_ctx,
+#     )
 
 @router.get(ApiPaths.GET_LENDER_ORDERS, status_code=status.HTTP_200_OK, dependencies=[Depends(AuthHelper.verify_jwt)])
 async def get_lender_orders(

@@ -1,7 +1,7 @@
-from loopit.src.helpers.app_settings import AppSettings
+from helpers.app_settings import AppSettings
 from boto3.dynamodb.types import TypeDeserializer
 from boto3.dynamodb.types import TypeSerializer
-from loopit.src.models.category import Category
+from models.category import Category
 import botocore.exceptions
 from typing import List,Optional
 import time

@@ -1,5 +1,5 @@
-from loopit.src.repository.category_repository import CategoryRepo
-from loopit.src.models.category import Category
+from repository.category_repository import CategoryRepo
+from models.category import Category
 import logging
 from decimal import Decimal
 
