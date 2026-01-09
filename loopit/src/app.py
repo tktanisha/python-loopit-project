@@ -2,7 +2,7 @@
 from dotenv import load_dotenv
 load_dotenv()
 from fastapi import FastAPI
-
+from fastapi.middleware.cors import CORSMiddleware
 from api.v1.routes.auth import router as auth_router
 from api.v1.routes.category import router as category_router
 from api.v1.routes.society import router as society_router
@@ -22,6 +22,14 @@ app = FastAPI(
     """,
     version="v1",
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # restrict later
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/health")
 def health():

@@ -58,7 +58,7 @@ class AuthServiceImple(AuthService):
         try:
             token = AuthHelper.create_token(user.id, user.role.value)
         except Exception as e:
-            logger.exception("jwt in service=",e)
+            logger.exception(f"jwt in service={e}")
             raise AuthServiceError("failed to generate token") from e
 
         return token, user

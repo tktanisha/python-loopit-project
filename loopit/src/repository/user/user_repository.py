@@ -39,7 +39,7 @@ class UserDynamoRepo(UserRepo):
             )
 
         except Exception as e:
-            logger.exception("in repo=",e)
+            logger.exception(f"in repo= {e}")
             raise UserRepositoryError("DynamoDB get_item failed") from e
 
         if "Item" not in resp:

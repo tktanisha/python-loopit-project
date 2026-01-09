@@ -21,7 +21,7 @@ class CategoryService:
         try:
             categories = await self.category_repo.get_all_categories()
         except Exception as e:
-            logger.exception("failed in service in get all category=")
+            logger.exception("failed in service in get all category")
             raise e 
         return categories               
     

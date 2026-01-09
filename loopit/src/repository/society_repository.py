@@ -39,10 +39,10 @@ class SocietyRepo:
                 Item=item_db,
             )
         except botocore.exceptions.ClientError as e:
-            logger.exception("failed to create society (ClientError)")
+            logger.exception("failed to create society ")
             raise RuntimeError(e)
         except Exception as e:
-            logger.exception("failed to create society (unexpected)")
+            logger.exception("failed to create society ")
             raise RuntimeError(e)
 
     async def find_all(self) -> List[Society]:
@@ -56,10 +56,10 @@ class SocietyRepo:
                 },
             )
         except botocore.exceptions.ClientError as e:
-            logger.exception("failed to query societies (ClientError)")
+            logger.exception("failed to query societies ")
             raise RuntimeError(e)
         except Exception as e:
-            logger.exception("failed to query societies (unexpected)")
+            logger.exception("failed to query societies ")
             raise RuntimeError(e)
 
         items = response.get("Items", [])
@@ -95,10 +95,10 @@ class SocietyRepo:
                 },
             )
         except botocore.exceptions.ClientError as e:
-            logger.exception("failed to get society (ClientError)")
+            logger.exception("failed to get society ")
             raise RuntimeError(e)
         except Exception as e:
-            logger.exception("failed to get society (unexpected)")
+            logger.exception("failed to get society ")
             raise RuntimeError(e)
 
         item = resp.get("Item")
@@ -160,8 +160,8 @@ class SocietyRepo:
                  ConditionExpression="attribute_exists(pk) AND attribute_exists(sk)",
             )
         except botocore.exceptions.ClientError as e:
-            logger.exception("failed to delete society (ClientError)")
+            logger.exception("failed to delete society ")
             raise RuntimeError(e)
         except Exception as e:
-            logger.exception("failed to delete society (unexpected)")
+            logger.exception("failed to delete society ")
             raise RuntimeError(e)

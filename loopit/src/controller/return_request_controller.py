@@ -19,7 +19,6 @@ async def get_pending_return_requests(user_ctx, return_request_service: ReturnRe
     except StopIteration:
         raise
 
-        # empty iterable case 
     except Exception as e:
         return write_error_response(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -51,7 +50,6 @@ async def create_return_request(order_id: int, user_ctx, return_request_service:
     )
 
 async def update_return_request_status(request_id: int, status_str: str, user_ctx, return_request_service: ReturnRequestService):
-
 
     try:
         parsed_status =ReturnStatus(status_str)

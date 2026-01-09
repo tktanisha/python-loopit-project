@@ -137,7 +137,7 @@ class BuyRequestRepo:
             doc = {k: self.deserializer.deserialize(v) for k, v in item.items()}
             return BuyingRequest.model_validate({
                 "ID": int(doc.get("ID")),
-                "ProductID": int(doc.get("ProductId")),
+                "ProductId": int(doc.get("ProductId")),
                 "RequestedBy": int(doc.get("RequestedBy")),
                 "Status": str(doc.get("Status")),
                 "CreatedAt": doc.get("CreatedAt"),

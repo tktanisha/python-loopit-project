@@ -1,5 +1,4 @@
 
-# controller/buyer_request_controller.py
 from fastapi import status
 from typing import Optional, List
 from helpers.error_handler import write_error_response
@@ -44,7 +43,7 @@ async def update_buyer_request_status(
     except Exception as e:
         return write_error_response(
             status_code=status.HTTP_400_BAD_REQUEST,
-            error=f"invalid status value= {parsed_status}",
+            error=f"invalid status value= {status_str}",
             details=str(e),
         )
 

@@ -8,8 +8,8 @@ from schemas.society import SocietyRequest,SocietyResponse
 from setup.society_dependency import get_society_service
 from helpers.auth_helper import AuthHelper
 
-# dependencies= [Depends(AuthHelper.verify_jwt)] 
-router = APIRouter()
+
+router = APIRouter( dependencies= [Depends(AuthHelper.verify_jwt)] )
 
 @router.post(ApiPaths.CREATE_SOCIETY , status_code=status.HTTP_201_CREATED)
 async def create_society(society: SocietyRequest, society_service= Depends(get_society_service)):

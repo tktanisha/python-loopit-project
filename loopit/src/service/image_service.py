@@ -12,7 +12,7 @@ lambda_client = boto3.client("lambda", region_name=REGION)
 def upload_image_via_lambda(payload: dict) -> dict:
     try:
         api_gateway_simulated_event = {
-        "body": json.dumps(payload),  # The Go code looks for event.Body
+        "body": json.dumps(payload),  
         "resource": "/images/upload",
         "httpMethod": "PUT"
     }

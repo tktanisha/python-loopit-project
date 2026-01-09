@@ -1,5 +1,4 @@
 
-# api/return_request_routes.py
 from fastapi import APIRouter, Depends, status, Request
 from helpers.auth_helper import AuthHelper
 from helpers.api_paths import ApiPaths

@@ -1,18 +1,13 @@
 
-# controller/user_controller.py
 from fastapi import status
 from helpers.error_handler import write_error_response
 from helpers.success_handler import write_success_response
 from service.user_service import UserService
 
-# Optional: if you have a Role enum, import and use it
-# from models.enums.role import Role  # e.g., Role.admin / Role.lender
+
 
 def _is_admin(user_ctx) -> bool:
-    """
-    Utility to check admin role from user_ctx.
-    Supports both dict-based and object-based user_ctx.
-    """
+  
     role_val = None
     if isinstance(user_ctx, dict):
         role_val = user_ctx.get("role")
@@ -30,7 +25,6 @@ async def become_lender(user_service: UserService, user_ctx):
         )
     try:
         await user_service.become_lender(user_ctx)
-        # reflect role change in returned user object 
         if isinstance(user_ctx, dict):
             user_ctx["role"] = "lender"
             

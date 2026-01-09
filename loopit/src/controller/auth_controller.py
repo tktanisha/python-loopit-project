@@ -23,7 +23,7 @@ async def signup_controller(
         email=payload.email,
         phone_number=payload.phone_number,
         address=payload.address or "",
-        password_hash=payload.password,  # raw password for now
+        password_hash=payload.password,  
         society_id=payload.society_id,
     )
     try:

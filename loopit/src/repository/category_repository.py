@@ -98,11 +98,11 @@ class CategoryRepo:
             )
 
         except botocore.exceptions.ClientError as e:
-            logger.exception("aied to get the category")
+            logger.exception("failed to get the category")
             raise RuntimeError(e)
         
         except Exception as e:
-            logger.exception("failed to get category (unexpected)")
+            logger.exception("failed to get category ")
             raise RuntimeError(e) 
 
         item= response.get("Item")
@@ -142,14 +142,13 @@ class CategoryRepo:
                 self.dynamodb.put_item,
                 TableName=self.table_name,
                 Item=item,
-                # ensure we only update existing items
                 ConditionExpression="attribute_exists(pk) AND attribute_exists(sk)",
             )
         except botocore.exceptions.ClientError as e:
-            logger.exception("failed to update category (ClientError)")
+            logger.exception("failed to update category ")
             raise RuntimeError("e")
         except Exception as e:
-            logger.exception("failed to update category (unexpected)")
+            logger.exception("failed to update category ")
             raise RuntimeError(e)
 
 

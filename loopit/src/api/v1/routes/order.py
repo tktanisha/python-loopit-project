@@ -1,5 +1,4 @@
 
-# api/order_routes.py
 from fastapi import APIRouter, Depends, status, Request
 from helpers.auth_helper import AuthHelper
 from service.order_service import OrderService

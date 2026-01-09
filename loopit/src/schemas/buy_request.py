@@ -1,5 +1,4 @@
 
-# schemas/buying_request.py
 from pydantic import BaseModel, Field
 from typing import Optional
 from schemas.product import ProductResponse
